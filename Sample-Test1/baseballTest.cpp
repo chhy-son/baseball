@@ -32,3 +32,12 @@ TEST_F(BascBallGameExceptionFixture, 3strike) {
     EXPECT_EQ(res.strikes, 3);
     EXPECT_EQ(res.balls, 0);
 }
+
+TEST_F(BascBallGameExceptionFixture, 1strike2ball) {
+
+    GuessReuslt res = game.guess("132");
+
+    EXPECT_FALSE(res.isSolved);
+    EXPECT_EQ(res.strikes, 1);
+    EXPECT_EQ(res.balls, 2);
+}

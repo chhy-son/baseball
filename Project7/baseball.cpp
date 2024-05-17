@@ -17,9 +17,22 @@ public:
 
     GuessReuslt guess(const string& guessNumber) {
         assertIllegalArguments(guessNumber);
+        GuessReuslt gr = { 0, 0, false };
 
-        if (guessNumber == answerNumber)
-            return {3, 0, true};
+        for (int i = 0; i < 3; i++) {
+            if (guessNumber[i] == answerNumber[i])
+                gr.strikes++;
+        
+            for (int j = 0; j < 3; j++) {
+                if (i == j) continue;
+                if (guessNumber[i] == answerNumber[j])
+                    gr.balls++;
+            }
+        }
+        
+        if (gr.strikes == 3) gr.isSolved = true;
+
+        return gr;
     }
 
     void assertIllegalArguments(const std::string& guessNumber)
