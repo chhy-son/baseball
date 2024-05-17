@@ -10,36 +10,45 @@ struct GuessReuslt {
 
 class BaseBallGame {
 public:
-    BaseBallGame(string answerNumber) : answerNumber{ answerNumber } 
+    BaseBallGame(string answerNumber) : answerNumbers{ answerNumber }
     {
 
     }
 
-    GuessReuslt guess(const string& guessNumber) {
-        assertIllegalArguments(guessNumber);
-        GuessReuslt gr = { 0, 0, false };
+    GuessReuslt guess(const string& guessNumbers) {
+        assertIllegalArguments(guessNumbers);
+        GuessReuslt result = { 0, 0, false };
 
         for (int i = 0; i < 3; i++) {
-            if (guessNumber[i] == answerNumber[i])
-                gr.strikes++;
-        
-            for (int j = 0; j < 3; j++) {
-                if (i == j) continue;
-                if (guessNumber[i] == answerNumber[j])
-                    gr.balls++;
-            }
+            if (guessNumbers[i] == answerNumbers[i])
+                result.strikes++;
+            else if (isIn(guessNumbers[i]))
+                result.balls++;
         }
-        
-        if (gr.strikes == 3) gr.isSolved = true;
 
-        return gr;
+        if (result.strikes == 3)
+            result.isSolved = true;
+
+        return result;
+    }
+
+    bool isIn(char guessNumber)
+    {
+        for (char answerNumber : answerNumbers){
+            if (guessNumber != answerNumber)
+                continue;
+
+            return true;
+        }
+
+        return false;
     }
 
     void assertIllegalArguments(const std::string& guessNumber)
     {
         if (guessNumber.length() != 3)
             throw length_error("Must be three letters");
-    
+
         for (char c : guessNumber) {
             if ('0' <= c && c <= '9')
                 continue;
@@ -56,5 +65,5 @@ public:
             || guessNumber[1] == guessNumber[2];
     }
 private:
-    string answerNumber;
+    string answerNumbers;
 };
