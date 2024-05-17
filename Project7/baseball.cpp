@@ -10,6 +10,7 @@ struct GuessReuslt {
 
 class BaseBallGame {
 public:
+    const int numbersLength = 3;
     BaseBallGame(string answerNumber) : answerNumbers{ answerNumber }
     {
 
@@ -19,28 +20,30 @@ public:
         assertIllegalArguments(guessNumbers);
         GuessReuslt result = { 0, 0, false };
 
-        for (int i = 0; i < 3; i++) {
-            if (guessNumbers[i] == answerNumbers[i])
+        for (int i = 0; i < numbersLength; i++) {
+            if (isStrike(guessNumbers, i))
                 result.strikes++;
-            else if (isIn(guessNumbers[i]))
+            else if (isBall(guessNumbers[i]))
                 result.balls++;
         }
 
-        if (result.strikes == 3)
+        if (result.strikes == numbersLength)
             result.isSolved = true;
 
         return result;
     }
 
-    bool isIn(char guessNumber)
+    bool isStrike(const string& guessNumbers, int i)
+    {
+        return guessNumbers[i] == answerNumbers[i];
+    }
+    bool isBall(char guessNumber)
     {
         for (char answerNumber : answerNumbers){
             if (guessNumber != answerNumber)
                 continue;
-
             return true;
         }
-
         return false;
     }
 
