@@ -30,5 +30,5 @@ TEST_F(BascBallGameExceptionFixture, 3strike) {
 
     EXPECT_TRUE(res.isSolved);
     EXPECT_EQ(res.strikes, 3);
-    EXPECT_EQ(res.balls, 3);
+    EXPECT_EQ(res.balls, 0);
 }
