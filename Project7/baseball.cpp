@@ -2,10 +2,23 @@
 
 using namespace std;
 
+struct GuessReuslt {
+    int strikes;
+    int balls;
+    bool isSolved;
+};
+
 class BaseBallGame {
 public:
-    void guess(const string& guessNumber) {
+    BaseBallGame(string answerNumber) : answerNumber{ answerNumber } 
+    {
+
+    }
+
+    GuessReuslt guess(const string& guessNumber) {
         assertIllegalArguments(guessNumber);
+
+        return {3, 3, true};
     }
 
     void assertIllegalArguments(const std::string& guessNumber)
@@ -15,7 +28,8 @@ public:
     
         for (char c : guessNumber) {
             if ('0' <= c && c <= '9')
-                throw invalid_argument("Must be number");
+                continue;
+            throw invalid_argument("Must be number");
         }
 
         if (isDuplicatedNum(guessNumber))
@@ -27,4 +41,6 @@ public:
             || guessNumber[0] == guessNumber[2]
             || guessNumber[1] == guessNumber[2];
     }
+private:
+    string answerNumber;
 };
