@@ -23,4 +23,5 @@ TEST_F(BascBallGameExceptionFixture, ThrowExceptionWhenInvalidCase) {
     assertException("121");
     assertException("221");
     assertException("322");
+
 }
