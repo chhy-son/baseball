@@ -3,9 +3,9 @@
 
 class BascBallGameExceptionFixture : public testing::Test {
 public:
-    void assertException(const string& guessStr) {
+    void assertException(const string& guessNumber) {
         try {
-            bb.guess(guessStr);
+            bb.guess(guessNumber);
             FAIL();
         }
         catch (exception e) {
@@ -19,4 +19,8 @@ private:
 TEST_F(BascBallGameExceptionFixture, ThrowExceptionWhenInvalidCase) {
     assertException("12");
     assertException("12s");
+    //duplicated num
+    assertException("121");
+    assertException("221");
+    assertException("322");
 }
